@@ -1,0 +1,29 @@
+#user-image-default{
+    width: 60%;
+}
+
+
+.file-preview{
+    overflow: hidden;
+    width: 270px;
+    height: 304px;
+}
+
+.kv-user .krajee-default.file-preview-frame,.kv-user .krajee-default.file-preview-frame:hover {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    text-align: center;
+}
+.kv-user {
+    display: inline-block;
+}
+.kv-user .file-input {
+    display: table-cell;
+}
+.kv-reqd {
+    color: red;
+    font-family: monospace;
+    font-weight: normal;
+}
