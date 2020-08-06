@@ -33,7 +33,20 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function (){
 	Route::get('/customer', 'CustomerController@index')->name('customer-index');
 
 
+	//Rutas de Usuarios
 	Route::get('/user', 'UserController@index')->name('user-index');
+	Route::get('/user/create', 'UserController@create')->name('user-create');
+	Route::post('/user/store', 'UserController@store')->name('user-store');
+	Route::get('/user/edit/{user_id}', 'UserController@edit')->name('user-edit');
+	Route::put('/user/update/{user_id}', 'UserController@update')->name('user-update');
+	Route::get('/user/destroy/{user_id}', 'UserController@destroy')->name('user-destroy');
+	Route::post('user/{user}', 'UserController@show')->name('user-show');
+	//----------------------------------------------------------------------------
+	Route::get('user/{user_id}/state', 'UserController@state')->name('user-change-state');
+	Route::get('user/{user_id}/image/edit', 'UserController@editImage')->name('user-image-edit');
+	Route::put('user/{user_id}/image', 'UserController@updateImage')->name('user-image-update');
+//Fin rutas de Usuarios
+//------------------------------------------------------------------------------
 
 
 
