@@ -33,6 +33,7 @@ class ProductController extends Controller
      */
     public function create()
     {
+        can('product-create');
         $product_categorys=  ProductCategory::orderBy('product_category_id')->get();
         return view('admin.product.create', compact('product_categorys'));
     }
@@ -45,7 +46,7 @@ class ProductController extends Controller
      */
     public function store(ValidationProduct $request)
     {
-        
+
         if($request->product_image == null){
 
         }else{
@@ -56,23 +57,23 @@ class ProductController extends Controller
 
         if(isset($request->state)){
             $request->request->add(['product_state' => 'active']);
-            
+
         }else{
             $request->request->add(['product_state' => 'desactive']);
         }
 
         if(isset($request->personalized)){
-            
+
             if (count($request->personalized)==2) {
                 $request->request->add(['product_customization' => 'text,image']);
-                
+
 
             }else{
 
                 $request->request->add(['product_customization' => $request->personalized[0]]);
                 // dd($request->personalized[0]);
             }
-            
+
         }
 
         $product = Product::create($request->all());
@@ -99,8 +100,8 @@ class ProductController extends Controller
      */
     public function edit($product_id)
     {
-
-        $product = Product::with('productCategory')->find($product_id); 
+        can('product-edit');
+        $product = Product::with('productCategory')->find($product_id);
         // dd($product->productCategory[0]);
         $product_categorys=  ProductCategory::orderBy('product_category_id')->get();
         $product_customizations = explode(",",$product->product_customization);
@@ -126,10 +127,10 @@ class ProductController extends Controller
 
             $product = Product::findOrFail($product_id);
             $request->request->add(['product_image_name' => $product->product_image_name]);
-            
+
 
         }else{
-            
+
             $product = Product::findOrFail($product_id);
             $rute = explode("/", $product->product_image_name);
 
@@ -139,30 +140,30 @@ class ProductController extends Controller
                 $request->request->add(['product_image_name' => $name_image]);
             }else{
                 if($name_image = Product::setImage($request->product_image))
-                $request->request->add(['product_image_name' => $name_image]);  
+                $request->request->add(['product_image_name' => $name_image]);
             }
 
         }
 
         if(isset($request->state)){
             $request->request->add(['product_state' => 'active']);
-            
+
         }else{
             $request->request->add(['product_state' => 'desactive']);
         }
 
         if(isset($request->personalized)){
-            
+
             if (count($request->personalized)==2) {
                 $request->request->add(['product_customization' => 'text,image']);
-                
+
 
             }else{
 
                 $request->request->add(['product_customization' => $request->personalized[0]]);
                 // dd($request->personalized[0]);
             }
-            
+
         }
 
 
@@ -179,7 +180,7 @@ class ProductController extends Controller
      */
     public function destroy($product_id)
     {
-        
+        can('product-destroy');
 
         $product = Product::findOrFail($product_id);
 
@@ -195,14 +196,14 @@ class ProductController extends Controller
                 Storage::disk('dropbox')->getDriver()->getAdapter()->getClient()->delete("images/products/".$name_image_delete[0]);
                 Product::destroy($product_id);
                 return redirect('admin/product/')->with('message', 'Producto eliminado correctamente');
-                  
+
             }else{
                 return redirect('admin/product/')->with('message', 'Este producto esta siendo utilizado');
             }
         }else{
             Product::destroy($product_id);
             return redirect('admin/product/')->with('message', 'Producto eliminado correctamente');
-        }    
+        }
     }
 
     public function state($product_id)
@@ -218,15 +219,15 @@ class ProductController extends Controller
 
             $product = Product::find($product_id);
             $product->product_state = 'active';
-            $product->save();   
-            return redirect('admin/product/')->with('message', 'Producto activado correctamente');    
+            $product->save();
+            return redirect('admin/product/')->with('message', 'Producto activado correctamente');
 
        }
     }
 
     public function editImage($product_id)
     {
-        $product = Product::findOrFail($product_id); 
+        $product = Product::findOrFail($product_id);
         return view('admin.product.edit-image', compact('product'));
     }
 
@@ -241,10 +242,10 @@ class ProductController extends Controller
             $request->request->add(['product_image_name' => $name_image]);
         }else{
             if($name_image = Product::setImage($request->product_image))
-            $request->request->add(['product_image_name' => $name_image]);  
+            $request->request->add(['product_image_name' => $name_image]);
         }
 
         $product->update($request->all());
-        return redirect('admin/product')->with('message', 'Imagen del producto fue cambiada con exito');     
+        return redirect('admin/product')->with('message', 'Imagen del producto fue cambiada con exito');
     }
 }

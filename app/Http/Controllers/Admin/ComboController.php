@@ -40,7 +40,7 @@ class ComboController extends Controller
      */
     public function create()
     {
-        
+        can('combo-create');
         $combo_types = ComboType::orderBy('created_at', 'DESC')->get();
         $products = Product::where('product_state', 'active')->orderBy('created_at', 'DESC')->with('productCategory')->get();
         $bases = Base::orderBy('created_at', 'DESC')->get();
@@ -58,7 +58,7 @@ class ComboController extends Controller
 
         // if(isset($request->state)){
         //     $request->request->add(['combo_state' => 'active']);
-            
+
         // }else{
         //     $request->request->add(['combo_state' => 'desactive']);
         // }
@@ -77,10 +77,10 @@ class ComboController extends Controller
         $combos = Combo::all()->last();
         $combo_id = $combos->combo_id;
 
-        $combo_images = $request->file('combo_image'); 
+        $combo_images = $request->file('combo_image');
 
         if ($combo_images==NULL) {
-            
+
         }else{
 
             $uploadcount = 0;
@@ -89,7 +89,7 @@ class ComboController extends Controller
             {
                 $image_name = Str::random(50) . '.jpg';
                 $imagen[] = Image::make($combo_image)->encode('jpg', 75);
-                $images_names[] = $image_name;  
+                $images_names[] = $image_name;
 
                 Storage::disk('dropbox')->put("images/combos/$images_names[$uploadcount]", $imagen[$uploadcount]->stream());
                 $dropbox = Storage::disk('dropbox')->getDriver()->getAdapter()->getClient();
@@ -120,7 +120,7 @@ class ComboController extends Controller
     {
 
         return view('admin.combo.show', compact('combo'));
-        
+
     }
 
     /**
@@ -131,6 +131,8 @@ class ComboController extends Controller
      */
     public function edit($combo_id)
     {
+
+        can('combo-edit');
         $combo_types = ComboType::orderBy('created_at', 'DESC')->get();
         $products = Product::where('product_state', 'active')->orderBy('created_at', 'DESC')->with('productCategory')->get();
         $bases = Base::orderBy('created_at', 'DESC')->get();
@@ -140,7 +142,7 @@ class ComboController extends Controller
         $combo_units = [];
         foreach ($combo->products as $product) {
             $combo_products[] = $product->product_id;
-            $combo_units[$product->product_id] = $product->pivot->units; 
+            $combo_units[$product->product_id] = $product->pivot->units;
         }
 
         // dd($combo_units);
@@ -165,7 +167,7 @@ class ComboController extends Controller
 
         for ( $i=0 ; $i< count($request->product_id); $i++ )
         {
-           
+
             DB::table('combo_products')->insert(
                 ['combo_id' => $combo_id, 'product_id' => $request->product_id[$i], 'units' => $request->units[$request->product_id[$i]]]
             );
@@ -187,8 +189,8 @@ class ComboController extends Controller
 
             $combo = combo::find($combo_id);
             $combo->combo_state = 'active';
-            $combo->save();   
-            return redirect('admin/combo/')->with('message', 'combo activado correctamente');    
+            $combo->save();
+            return redirect('admin/combo/')->with('message', 'combo activado correctamente');
 
        }
     }
@@ -200,8 +202,9 @@ class ComboController extends Controller
      */
     public function destroy($combo_id)
     {
+        can('combo-destroy');
         $combo =  Combo::findOrFail($combo_id);
-    
+
         $deleteCount = 0;
 
         foreach ($combo->comboImages as $combo_image) {
@@ -209,9 +212,9 @@ class ComboController extends Controller
             $name_image_delete[] = explode("?",$rute[$deleteCount][5]);
 
             Storage::disk('dropbox')->getDriver()->getAdapter()->getClient()->delete("images/combos/".$name_image_delete[$deleteCount][0]);
-            ComboImage::destroy($combo_image->combo_image_id); 
+            ComboImage::destroy($combo_image->combo_image_id);
 
-            $deleteCount++;  
+            $deleteCount++;
         }
 
         combo::destroy($combo_id);

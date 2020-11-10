@@ -34,7 +34,7 @@ $(document).ready(function (){
 		  	setInterval(animacion, 1000);
 
 		}else{
-			$("body").append('<div id="toast-container" class="toast-top-right"><div class="toast toast-error toast-time-hide" aria-live="assertive" style=""><div class="toast-messages">La ordern ya fue asignada</div></div></div>')
+			$("body").append('<div id="toast-container" class="toast-top-right"><div class="toast toast-error toast-time-hide" aria-live="assertive" style=""><div class="toast-messages">La orden ya fue asignada</div></div></div>')
 			$(".toast-time-hide").fadeOut(4000);
 		}
 		

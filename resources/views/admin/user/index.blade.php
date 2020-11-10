@@ -53,7 +53,9 @@
                       <!--<th>Fecha de nacimiento</th>-->
                       <!--<th>Genero</th>-->
                       <th>Rol</th>
-                      <th class="text-center">Estado</th>
+                      @if (can('user-state', false))
+                        <th class="text-center">Estado</th>
+                      @endif
                       <th>Acciones</th>
                     </tr>
                   </thead>
@@ -79,16 +81,18 @@
                         <td class="align-middle">{{$user->user_email}}</td>
                         {{-- <td class="align-middle">{{$user->user_phone}}</td> --}}
                         <td class="align-middle">{{$user->rol->rol_name}}</td>
-                        <td class="text-center align-middle">
-                          <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                            @if($user->user_state == 'desactive')
-                            <input type="checkbox" data-url="{{route('user-change-state', ['user_id' => $user->user_id, 'user_state' => $user->user_state])}}" class="custom-control-input change-state" id="{{$user->user_id}}" name="state">
-                            @else
-                            <input type="checkbox" data-url="{{route('user-change-state', ['user_id' => $user->user_id, 'user_state' => $user->user_state])}}" checked="checked" class="custom-control-input change-state" id="{{$user->user_id}}" name="state">
-                            @endif
-                            <label class="custom-control-label" for="{{$user->user_id}}"></label>
-                          </div>
-                        </td>
+                         @if (can('user-state', false))
+                          <td class="text-center align-middle">
+                            <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                              @if($user->user_state == 'desactive')
+                              <input type="checkbox" data-url="{{route('user-change-state', ['user_id' => $user->user_id, 'user_state' => $user->user_state])}}" class="custom-control-input change-state" id="{{$user->user_id}}" name="state">
+                              @else
+                              <input type="checkbox" data-url="{{route('user-change-state', ['user_id' => $user->user_id, 'user_state' => $user->user_state])}}" checked="checked" class="custom-control-input change-state" id="{{$user->user_id}}" name="state">
+                              @endif
+                              <label class="custom-control-label" for="{{$user->user_id}}"></label>
+                            </div>
+                          </td>
+                        @endif
                         <!--botones de acciones-->
                         <td class="text-right py-0 align-middle">
                           <div class="btn-group btn-group-sm">

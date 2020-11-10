@@ -34,6 +34,7 @@ class BaseController extends Controller
      */
     public function create()
     {
+        can('base-create');
         return view('admin.base.create');
     }
 
@@ -45,27 +46,27 @@ class BaseController extends Controller
      */
     public function store(ValidationBase $request)
     {
-    	$base_images = $request->file('base_image');
+        $base_images = $request->file('base_image');
 
         if(!isset($request->base_customization)){
             $request->request->add(['base_customization' => '']);
-            
+
         }
-    	Base::create($request->all());
-    	$bases = Base::all()->last();
-    	$base_id = $bases->base_id;
+        Base::create($request->all());
+        $bases = Base::all()->last();
+        $base_id = $bases->base_id;
 
         if($base_images == NULL){
 
         }else{
 
-        	$uploadcount = 0;
+            $uploadcount = 0;
 
-    		foreach($base_images as $base_image)
+            foreach($base_images as $base_image)
             {
-            	$image_name = Str::random(50) . '.jpg';
-            	$imagen[] = Image::make($base_image)->encode('jpg', 75);
-                $images_names[] = $image_name;  
+                $image_name = Str::random(50) . '.jpg';
+                $imagen[] = Image::make($base_image)->encode('jpg', 75);
+                $images_names[] = $image_name;
 
                 Storage::disk('dropbox')->put("images/bases/$images_names[$uploadcount]", $imagen[$uploadcount]->stream());
                 $dropbox = Storage::disk('dropbox')->getDriver()->getAdapter()->getClient();
@@ -104,6 +105,7 @@ class BaseController extends Controller
      */
     public function edit($base_id)
     {
+        can('base-edit');
         $base = Base::with('baseImages')->find($base_id);
         return view('admin.base.edit', compact('base'));
     }
@@ -119,13 +121,13 @@ class BaseController extends Controller
     {
         if(isset($request->state)){
             $request->request->add(['base_state' => 'active']);
-            
+
         }else{
             $request->request->add(['base_state' => 'desactive']);
         }
         if(!isset($request->base_customization)){
             $request->request->add(['base_customization' => '']);
-            
+
         }
 
         Base::findOrFail($base_id)->update($request->all());
@@ -140,6 +142,7 @@ class BaseController extends Controller
      */
     public function destroy($base_id)
     {
+        can('base-destroy');
         $base = Base::findOrFail($base_id);
         $count_base = count($base->combos);
 
@@ -152,15 +155,15 @@ class BaseController extends Controller
                 $name_image_delete[] = explode("?",$rute[$deleteCount][5]);
 
                 Storage::disk('dropbox')->getDriver()->getAdapter()->getClient()->delete("images/bases/".$name_image_delete[$deleteCount][0]);
-                
-                BaseImage::destroy($base_image->base_image_id);              
+
+                BaseImage::destroy($base_image->base_image_id);
                 $deleteCount++;
             }
 
             base::destroy($base_id);
             return redirect('admin/base/')->with('message', 'base eliminado correctamente');
         }else{
-            return redirect('admin/base/')->with('message', 'Esta base esta siendo utilizada');   
+            return redirect('admin/base/')->with('message', 'Esta base esta siendo utilizada');
         }
 
     }
@@ -178,9 +181,9 @@ class BaseController extends Controller
 
             $base = base::find($base_id);
             $base->base_state = 'active';
-            $base->save();   
-            return redirect('admin/base/')->with('message', 'base activado correctamente');    
+            $base->save();
+            return redirect('admin/base/')->with('message', 'base activado correctamente');
 
        }
-    }     
+    }
 }

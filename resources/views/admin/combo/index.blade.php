@@ -39,15 +39,7 @@
       </div>
     </div>
     <div class="card-body">
-      @if(session('message'))
-        <div id="toast-container" class="toast-top-right">
-          <div class="toast toast-success toast-time-hide" aria-live="assertive" style="">
-            <div class="toast-message">
-              {{session('message')}}
-            </div>
-          </div>    
-        </div>  
-      @endif
+      @include('includes.messages')
       <div class="row">
           <div class="col-12">
               <!-- /.card-header -->
@@ -61,7 +53,9 @@
                       <th>Nombre</th>
                       <th>Tipo</th>
                       <th>Precio</th>
-                      <th class="text-center">Estado</th>
+                      @if (can('combo-state', false))
+                        <th class="text-center">Estado</th>
+                      @endif
                       <th></th>
                     </tr>
                   </thead>
@@ -78,7 +72,7 @@
                           <a href="{{$combo_image->combo_image_name}}" data-gallery="combo-gallery-{{$combo->combo_id}}" data-title="{{$combo->combo_name}}(${{$combo->combo_sale_price}})" data-footer="<a href='{{route('combo-image-edit', ['combo_image_id' => $combo_image->combo_image_id])}}' class='btn btn-success' title='Cambiar imagen'><i class='fa fa-exchange-alt'></i></a><a href='{{route('combo-image-destroy', ['combo_image_id' => $combo_image->combo_image_id])}}'  class='btn btn-danger combo-destroy' title='Eliminar imagen'><i class='fas fa-trash'></i></a>" data-toggle="lightbox">
                             <img class="combo-image" width="24px" height="32px" src="{{$combo_image->combo_image_name}}">
                           </a>
-                         </div> 
+                         </div>
                          @php $count_image++; @endphp
                         @endforeach
                         @if($count_image < 4)
@@ -87,29 +81,33 @@
                             <div class="product-image-thumb justify-content-center" style="width: 42px; height: 50px; margin: 1px; overflow: hidden;">
                               <a href="{{route('combo-image-create', $combo)}}" style="font-size: 24px; color:#17a2b0"><i class="fa fa-plus-circle"></i></a>
                             </div>
-                          @endfor  
-                        @endif                                               
+                          @endfor
+                        @endif
                         </div>
                       </td>
                       <td class="align-middle">{{$combo->combo_name}}</td>
                       <td class="align-middle">{{$combo->comboType->combo_type_name}}</td>
                       <td class="align-middle">$ {{$combo->combo_sale_price}}</td>
-                      <td class="text-center align-middle">
-                        <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                          @if($combo->combo_state == 'desactive')
-                            <input type="checkbox" data-url="{{route('combo-change-state', ['combo_id' => $combo->combo_id, 'combo_state' => $combo->combo_state])}}" class="custom-control-input change-state" id="{{$combo->combo_id}}" name="state">
-                          @else
-                            <input type="checkbox" data-url="{{route('combo-change-state', ['combo_id' => $combo->combo_id, 'combo_state' => $combo->combo_state])}}" checked="checked" class="custom-control-input change-state" id="{{$combo->combo_id}}" name="state">
-                          @endif
-                          <label class="custom-control-label" for="{{$combo->combo_id}}"></label>
-                        </div>
-                      </td>
+                       @if (can('combo-state', false))
+                        <td class="text-center align-middle">
+                          <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                            @if($combo->combo_state == 'desactive')
+                              <input type="checkbox" data-url="{{route('combo-change-state', ['combo_id' => $combo->combo_id, 'combo_state' => $combo->combo_state])}}" class="custom-control-input change-state" id="{{$combo->combo_id}}" name="state">
+                            @else
+                              <input type="checkbox" data-url="{{route('combo-change-state', ['combo_id' => $combo->combo_id, 'combo_state' => $combo->combo_state])}}" checked="checked" class="custom-control-input change-state" id="{{$combo->combo_id}}" name="state">
+                            @endif
+                            <label class="custom-control-label" for="{{$combo->combo_id}}"></label>
+                          </div>
+                        </td>
+                      @endif
                       <td class="text-right py-0 align-middle">
                         <div class="btn-group btn-group-sm">
                           <a href="{{route('combo-show', $combo)}}" class="btn btn-info combo-show" data-toggle="modal" data-target="#modal-default"><i class="fas fa-eye"></i></a>
                           @csrf
                           <a href="{{route('combo-edit', ['combo_id' => $combo->combo_id])}}" class="btn btn-success" title="Editar"><i class="fas fa-edit"></i></a>
-                          <a href="{{route('combo-destroy', ['combo_id' => $combo->combo_id])}}" class="btn btn-danger combo-destroy"><i class="fas fa-trash"></i></a>
+                          @if (can('combo-destroy', false))
+                            <a href="{{route('combo-destroy', ['combo_id' => $combo->combo_id])}}" class="btn btn-danger combo-destroy"><i class="fas fa-trash"></i></a>
+                        @endif
                         </div>
                       </td>
                     </tr>
@@ -124,7 +122,7 @@
     </div>
     <div class="modal fade" id="modal-combo-show">
       <!-- /.modal-dialog -->
-    </div>  
+    </div>
     <div class="card-footer">
       {{-- Footer --}}
     </div>

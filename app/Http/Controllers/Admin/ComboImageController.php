@@ -8,13 +8,14 @@ use App\Models\Admin\Combo;
 use App\Models\Admin\ComboImage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\image;
-use Illuminate\Support\Facades\Storage; 
+use Illuminate\Support\Facades\Storage;
 
 class ComboImageController extends Controller
 {
 
     public function create(combo $combo)
     {
+        can('combo-image-create');
         return view('admin.combo-image.create', compact('combo'));
     }
 
@@ -27,7 +28,7 @@ class ComboImageController extends Controller
         {
             $image_name = Str::random(50) . '.jpg';
             $imagen[] = Image::make($combo_image)->encode('jpg', 75);
-            $images_names[] = $image_name;  
+            $images_names[] = $image_name;
 
             Storage::disk('dropbox')->put("images/combos/$images_names[$uploadcount]", $imagen[$uploadcount]->stream());
                 $dropbox = Storage::disk('dropbox')->getDriver()->getAdapter()->getClient();
@@ -40,11 +41,13 @@ class ComboImageController extends Controller
 
             $uploadcount++;
         }
-        return redirect('admin/combo')->with('message', 'Imagen agregada con exito'); 
+        return redirect('admin/combo')->with('message', 'Imagen agregada con exito');
     }
 
     public function edit($combo_image_id)
     {
+
+        can('combo-image-edit');
         $image_combo = ComboImage::findOrFail($combo_image_id);
         $combo_image_name = $image_combo->combo_image_name;
         $combo = ComboImage::where('combo_image_name', $combo_image_name)->with('combo')->first();
@@ -64,7 +67,7 @@ class ComboImageController extends Controller
         ComboImage::where('combo_image_id', $combo_image_id)
             ->update(['combo_image_name' => $name_image]);
 
-        return redirect('admin/combo')->with('message', 'Imagen de la combo fue cambiada con exito');     
+        return redirect('admin/combo')->with('message', 'Imagen de la combo fue cambiada con exito');
     }
 
     public function destroy($combo_image_id)

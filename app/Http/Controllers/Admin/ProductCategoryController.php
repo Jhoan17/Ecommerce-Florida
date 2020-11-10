@@ -19,7 +19,7 @@ class ProductCategoryController extends Controller
     {
         $count=1;
         $product_categorys = ProductCategory::orderBy('created_at', 'DESC')->get();
-        return view('admin.product-category.index', compact('product_categorys','count'));    
+        return view('admin.product-category.index', compact('product_categorys','count'));
     }
 
     /**
@@ -29,6 +29,7 @@ class ProductCategoryController extends Controller
      */
     public function create()
     {
+        can('product-category-create');
         return view('admin.product-category.create');
     }
 
@@ -63,6 +64,7 @@ class ProductCategoryController extends Controller
      */
     public function edit($product_category_id)
     {
+        can('product-category-edit');
         $product_category = productCategory::findOrFail($product_category_id);
         return view('admin.product-category.edit', compact('product_category'));
     }
@@ -88,6 +90,7 @@ class ProductCategoryController extends Controller
      */
     public function destroy($product_category_id)
     {
+        can('product-category-destroy');
         ProductCategory::destroy($product_category_id);
         return redirect('admin/product-category/')->with('message', 'Categoria de producto eliminado correctamente');
     }

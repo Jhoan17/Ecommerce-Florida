@@ -19,7 +19,7 @@ class ComboTypeController extends Controller
     {
         $count=1;
         $combo_types = ComboType::orderBy('created_at', 'DESC')->get();
-        return view('admin.combo-type.index', compact('combo_types','count'));    
+        return view('admin.combo-type.index', compact('combo_types','count'));
     }
 
     /**
@@ -29,6 +29,7 @@ class ComboTypeController extends Controller
      */
     public function create()
     {
+        can('combo-type-create');
         return view('admin.combo-type.create');
     }
 
@@ -63,6 +64,7 @@ class ComboTypeController extends Controller
      */
     public function edit($combo_type_id)
     {
+        can('combo-type-edit');
         $combo_type = ComboType::findOrFail($combo_type_id);
         return view('admin.combo-type.edit', compact('combo_type'));
     }
@@ -88,6 +90,7 @@ class ComboTypeController extends Controller
      */
     public function destroy($combo_type_id)
     {
+        can('combo-type-destroy');
         ComboType::destroy($combo_type_id);
         return redirect('admin/combo-type/')->with('message', 'Tipo de combo eliminado correctamente');
     }

@@ -34,7 +34,7 @@
                   <a href="{{route('combo-type-create')}}" class="btn btn-block btn-outline-info">
                     <i class="fas fa-plus"></i> Agregar
                   </a>
-                </div>                
+                </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
@@ -55,7 +55,9 @@
                       <td class="text-right py-0 align-middle">
                         <div class="btn-group btn-group-sm">
                           <a href="{{route('combo-type-edit', ['combo_type_id' => $combo_type->combo_type_id])}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
-                          <a href="{{route('combo-type-destroy', ['combo_type_id' => $combo_type->combo_type_id])}}" class="btn btn-danger combo-type-destroy"><i class="fas fa-trash"></i></a>
+                          @if (can('combo-type-destroy', false))
+                            <a href="{{route('combo-type-destroy', ['combo_type_id' => $combo_type->combo_type_id])}}" class="btn btn-danger combo-type-destroy"><i class="fas fa-trash"></i></a>
+                          @endif
                         </div>
                       </td>
                     </tr>
@@ -71,7 +73,7 @@
     </div>
     <div class="modal fade" id="modal-combo-show">
       <!-- /.modal-dialog -->
-    </div>  
+    </div>
     <div class="card-footer">
       {{-- Footer --}}
     </div>

@@ -34,7 +34,7 @@ class UserController extends Controller
     {
         can('user-create');
         
-        $rols=Rol::orderby('rol_id')->where("rol_id","!=",10)->get();
+        $rols=Rol::orderby('rol_id')->get();
         $genders=array(
 
           "male"=> "masculino",
@@ -71,8 +71,8 @@ class UserController extends Controller
             $request->request->add(['user_state' => 'desactive']);
         }
 
-        $password=bcrypt($request->user_password); //-- Generador de password aleatoria encriptada
-        $request->request->add(['password' => $password]);
+        $password=bcrypt(Str::random(20)); //-- Generador de password aleatoria encriptada
+        $request->request->add(['user_password' => $password]);
         User::create($request->all());
         return redirect('admin/user/create')->with('message', 'Usario registrado con exito');
     }
@@ -99,7 +99,7 @@ class UserController extends Controller
       can('user-edit');
       
       $user = User::findOrFail($user_id);
-      $rols=Rol::orderby('rol_id')->where("rol_id","!=",10)->get();
+      $rols=Rol::orderby('rol_id')->get();
 
       $genders=array(
 
@@ -222,11 +222,11 @@ public function editImage($user_id)
 
 public function updateimage(Request $request, $user_id)
 {
-  $user = User::findOrFail($user_id);
-  $rute = explode("/", $user->user_image_name);
+    $user = User::findOrFail($user_id);
+    $rute = explode("/", $user->user_image_name);
 
-  if ($user->user_image_name=='https://www.dropbox.com/s/9dg1mjzwzfetepo/default-user.png?raw=1') {
-    if ($name_image = User::setImage($request->user_image))
+    if ($user->user_image_name=='https://www.dropbox.com/s/9dg1mjzwzfetepo/default-user.png?raw=1') {
+          if ($name_image = User::setImage($request->user_image))
               $request->request->add(['user_image_name' => $name_image]);
     }else{
         if (count($rute)==6) {
@@ -242,5 +242,5 @@ public function updateimage(Request $request, $user_id)
     $user->update($request->all());
     return redirect('admin/user')->with('message', 'Imagen del producto fue cambiada con exito');
 
-  }
+    }
 }

@@ -47,7 +47,9 @@
                       <th>Nombre</th>
                       <th>Medidas</th>
                       <th>Precio</th>
-                      <th class="text-center">Estado</th>
+                      @if (can('base-state', false))
+                        <th class="text-center">Estado</th>
+                      @endif
                       <th></th>
                     </tr>
                   </thead>
@@ -61,10 +63,10 @@
                         @php $count_image = 0; @endphp
                         @foreach($base->baseImages as $base_image)
                         <div class="product-image-thumb justify-content-center" style="width: 42px; height: 50px; margin: 1px; overflow: hidden;">
-                          <a href="{{$base_image->base_image_name}}" data-gallery="base-gallery-{{$base->base_id}}" data-title="{{$base->base_name}}({{$base->base_measure}})" data-footer="<a href='{{route('base-image-edit', ['base_image_id' => $base_image->base_image_id])}}' class='btn btn-success' title='Cambiar imagen'><i class='fa fa-exchange-alt'></i></a><a href='{{route('base-image-destroy', ['base_image_id' => $base_image->base_image_id])}}'  class='btn btn-danger base-destroy' title='Eliminar imagen'><i class='fas fa-trash'></i></a>" data-toggle="lightbox">
+                          <a href="{{$base_image->base_image_name}}" data-gallery="base-gallery-{{$base->base_id}}" data-title="{{$base->base_name}}({{$base->base_measure}})" data-footer="<a href='{{route('base-image-edit', ['base_image_id' => $base_image->base_image_id])}}' class='btn btn-success' title='Cambiar imagen'><i class='fa fa-exchange-alt'></i></a> @if (can('base-image-destroy', false)) <a href='{{route('base-image-destroy', ['base_image_id' => $base_image->base_image_id])}}'  class='btn btn-danger base-destroy' title='Eliminar imagen'><i class='fas fa-trash'></i></a>@endif" data-toggle="lightbox">
                             <img class="base-image" width="24px" height="32px" src="{{$base_image->base_image_name}}">
                           </a>
-                         </div> 
+                         </div>
                          @php $count_image++; @endphp
                         @endforeach
                         @if($count_image < 4)
@@ -73,13 +75,14 @@
                             <div class="product-image-thumb justify-content-center" style="width: 42px; height: 50px; margin: 1px">
                               <a href="{{route('base-image-create', $base)}}" style="font-size: 24px; color:#17a2b0"><i class="fa fa-plus-circle"></i></a>
                             </div>
-                          @endfor  
-                        @endif                                               
+                          @endfor
+                        @endif
                         </div>
                       </td>
                       <td class="align-middle">{{$base->base_name}}</td>
                       <td class="align-middle">{{$base->base_measure}}</td>
                       <td class="align-middle">$ {{$base->base_price}}</td>
+                   @if (can('base-state', false))
                       <td class="text-center align-middle">
                         <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                           @if($base->base_state == 'desactive')
@@ -90,12 +93,15 @@
                           <label class="custom-control-label" for="{{$base->base_id}}"></label>
                         </div>
                       </td>
+                    @endif
                       <td class="text-right py-0 align-middle">
                         <div class="btn-group btn-group-sm">
                           <a href="{{route('base-show', $base)}}" class="btn btn-info base-show" data-toggle="modal" data-target="#modal-default"><i class="fas fa-eye"></i></a>
                           @csrf
                           <a href="{{route('base-edit', ['base_id' => $base->base_id])}}" class="btn btn-success" title="Editar"><i class="fas fa-edit"></i></a>
-                          <a href="{{route('base-destroy', ['base_id' => $base->base_id])}}" class="btn btn-danger base-destroy"><i class="fas fa-trash"></i></a>
+                          @if (can('base-destroy', false))
+                            <a href="{{route('base-destroy', ['base_id' => $base->base_id])}}" class="btn btn-danger base-destroy"><i class="fas fa-trash"></i></a>
+                          @endif
                         </div>
                       </td>
                     </tr>
@@ -110,7 +116,7 @@
     </div>
     <div class="modal fade" id="modal-base-show">
       <!-- /.modal-dialog -->
-    </div>  
+    </div>
     <div class="card-footer">
       {{-- Footer --}}
     </div>

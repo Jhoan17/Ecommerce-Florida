@@ -34,7 +34,7 @@
                   <a href="{{route('product-category-create')}}" class="btn btn-block btn-outline-info">
                     <i class="fas fa-plus"></i> Agregar
                   </a>
-                </div>                
+                </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
@@ -55,7 +55,9 @@
                       <td class="text-right py-0 align-middle">
                         <div class="btn-group btn-group-sm">
                           <a href="{{route('product-category-edit', ['product_category_id' => $product_category->product_category_id])}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
-                          <a href="{{route('product-category-destroy', ['product_category_id' => $product_category->product_category_id])}}" class="btn btn-danger product-category-destroy"><i class="fas fa-trash"></i></a>
+                          @if (can('product-category-destroy', false))
+                            <a href="{{route('product-category-destroy', ['product_category_id' => $product_category->product_category_id])}}" class="btn btn-danger product-category-destroy"><i class="fas fa-trash"></i></a>
+                          @endif
                         </div>
                       </td>
                     </tr>
@@ -71,7 +73,7 @@
     </div>
     <div class="modal fade" id="modal-product-show">
       <!-- /.modal-dialog -->
-    </div>  
+    </div>
     <div class="card-footer">
       {{-- Footer --}}
     </div>
