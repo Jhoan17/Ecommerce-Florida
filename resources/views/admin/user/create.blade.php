@@ -67,11 +67,11 @@
                     <div class="row form-group">
                       <div class="col col-md-6">
                         <label for="exampleInputEmail1">Nombres</label>
-                        <input type="text" name="user_name" class="form-control lowercase" id="user_name" placeholder="Ingrese sus nombres" value="{{old('user_name')}}" autocomplete="off" >
+                        <input type="text" name="user_name" class="form-control lowercase" id="user_name" placeholder="Nombres del usuario" value="{{old('user_name')}}" autocomplete="off" >
                       </div>
                       <div class="col col-md-6">
                         <label for="exampleInputEmail1">Apellidos</label>
-                        <input type="text" name="user_surname" class="form-control lowercase" id="user_surname" placeholder="Igrese sus Apellidos" value="{{old('user_surname')}}" autocomplete="off" >
+                        <input type="text" name="user_surname" class="form-control lowercase" id="user_surname" placeholder="Apellidos del usuario" value="{{old('user_surname')}}" autocomplete="off" >
                       </div>
                     </div>
                     <div class="row form-group">
@@ -82,21 +82,8 @@
                         </div>
                       </div>
                       <div class="col col-md-6">
-                        <label for="exampleInputEmail1">E-mail</label>
-                        <input type="text" name="user_email" class="form-control lowercase" id="user_email" placeholder="Ingrese su E-mail aqui" value="{{old('user_email')}}" autocomplete="off" >
-                      </div>
-                    </div>
-
-                    <div class="row form-group">
-                      <div class="col col-md-6">
-                        <div class="form-group" >
-                          <label>N° Telefono</label>
-                          <input type="text" class="form-control lowercase" name="user_phone"  placeholder="Numero de Telefono" value="{{old('user_phone')}}" data-dropdown-css-class="select2-blue" autocomplete="off" style="width: 100%; color: black">
-                        </div>
-                      </div>
-                      <div class="col col-md-6">
                         <label for="exampleInputEmail1">Fecha nacimiento</label>
-                        <input type="date" name="user_birth_date" class="form-control lowercase" id="user_birth_date" placeholder="Ingrese su E-mail aqui" value="{{old('user_birth_date')}}" autocomplete="off" >
+                        <input type="date" name="user_birth_date" class="form-control lowercase" id="user_birth_date" value="{{old('user_birth_date')}}" autocomplete="off" >
                       </div>
                     </div>
 
@@ -113,6 +100,20 @@
                           </select>
                         </div>
                       </div>
+                      <div class="col col-md-6">
+                        <div class="form-group" >
+                          <label>N° Telefono</label>
+                          <input type="text" class="form-control lowercase" name="user_phone"  placeholder="Numero de Telefono" value="{{old('user_phone')}}" data-dropdown-css-class="select2-blue" autocomplete="off" style="width: 100%; color: black">
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="row form-group">
+                      <div class="col col-md-6">
+                        <label for="exampleInputEmail1">E-mail</label>
+                        <input type="email" name="user_email" class="form-control lowercase" id="user_email" placeholder="E-mail del usuario" value="{{old('user_email')}}" autocomplete="off" >
+                      </div>
                         <input type="hidden" name="user_state" value="desactive"> <!--Estado inactivo-->
                         <div class="col col-md-6">
                           <div class="form-group" >
@@ -127,6 +128,12 @@
                           </div>
                         </div>
 
+                    </div>
+                    <div class="row form-group">
+                      <div class="col col-md-12">
+                        <label for="exampleInputEmail1">CONTRASEÑA GENERADA</label>
+                        <input type="text" name="user_password" class="form-control lowercase" id="user_password" placeholder="" value="{{Str::random(10)}}" autocomplete="off" readonly>
+                      </div>
                     </div>
                   </div>
                  </div>

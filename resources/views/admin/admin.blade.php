@@ -7,6 +7,9 @@
 <section class="content">
 
   <!-- Default box -->
+  @include('includes.form-error')
+  @include('includes.messages')
+  @include('includes.messages-error')
   <div class="card">
     <div class="card-header">
       <h3 class="card-title">Inicio</h3>

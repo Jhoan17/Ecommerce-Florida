@@ -47,13 +47,10 @@ class BaseController extends Controller
     {
     	$base_images = $request->file('base_image');
 
-        // if(isset($request->state)){
-        //     $request->request->add(['base_state' => 'active']);
+        if(!isset($request->base_customization)){
+            $request->request->add(['base_customization' => '']);
             
-        // }else{
-        //     $request->request->add(['base_state' => 'desactive']);
-        // }
-
+        }
     	Base::create($request->all());
     	$bases = Base::all()->last();
     	$base_id = $bases->base_id;
@@ -125,6 +122,10 @@ class BaseController extends Controller
             
         }else{
             $request->request->add(['base_state' => 'desactive']);
+        }
+        if(!isset($request->base_customization)){
+            $request->request->add(['base_customization' => '']);
+            
         }
 
         Base::findOrFail($base_id)->update($request->all());

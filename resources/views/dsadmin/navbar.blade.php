@@ -6,7 +6,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="../../index3.html" class="nav-link">Mi Escritorio</a>
+        <a href="{{route("profile")}}" class="nav-link">Mi perfil</a>
       </li>
     </ul>
 
@@ -25,7 +25,7 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
+{{--       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-comments"></i>
           <span class="badge badge-danger navbar-badge">3</span>
@@ -81,39 +81,76 @@
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
         </div>
-      </li>
+      </li> --}}
       <!-- Notifications Dropdown Menu -->
+      {{-- {{Carbon\Carbon::now()->yesterday()->format("Y-m-d h:i A")}} --}}
+
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
+          <span class="badge badge-warning navbar-badge count-notification">{{$countNotifications}}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">15 Notifications</span>
-          <div class="dropdown-divider"></div>
+          <audio id="notifiable-sound">
+            <source src="{{asset('dsadmin/audios/notifiable1.mp3')}}" type="audio/wav">
+          </audio>
+          <input type="hidden" id="push-url" value="{{route('notification-push',['timestamp'=> "" ])}}">
+          <input type="hidden" id="input-count-notification" value="{{$countNotifications}}">
+          <span class="dropdown-item dropdown-header "><span class="count-notification">{{$countNotifications}}</span> Notificaciones</span>
+          <div id="desc-notifications">
+            @foreach($userNotifications as $notification)
+            <div class="dropdown-divider"></div>
+              <a href="{{ route('notification-read',['notification_id'=>$notification->notifiable_id]) }}"  class="dropdown-item">
+                <i class="fa fa-sort-amount-up mr-2"></i>Nueva @if( $notification->notifiable_type == "order") Orden @else Sugerencia @endif
+                <span class="float-right text-muted text-sm">
+                  @php
+
+                    setlocale(LC_TIME,"es_CO");
+                    $data_ac = Carbon\Carbon::now();
+                    $data_db = explode(" ", Carbon\Carbon::parse($notification->created_at)->format('Y-m-d h:i A'));
+                    
+                  @endphp
+                  @if($data_ac->format("Y-m-d") == $data_db[0])
+                    Hoy, {{$data_db[1]." ".$data_db[2]}}
+                  @elseif($data_ac->yesterday()->format("Y-m-d") == $data_db[0])
+                    Ayer, {{$data_db[1]." ".$data_db[2]}}
+                  @else
+
+                    {{ strftime("%a", strtotime( $data_db[0] )) }} a las {{$data_db[1]." ".$data_db[2]}}
+
+                  @endif
+
+                </span>
+              </a>
+            @endforeach
+          </div>
+
+{{--           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
-          </a>
-          <div class="dropdown-divider"></div>
+            <i class="fa fa-list-alt mr-2"></i> 3 Sugerencias nuevas
+            <span class="float-right text-muted text-sm">1 min</span>
+          </a> --}}
+{{--           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
             <i class="fas fa-file mr-2"></i> 3 new reports
             <span class="float-right text-muted text-sm">2 days</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+          </a> --}}
+          {{-- <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a> --}}
         </div>
       </li>
+
       <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
           <i class="fas fa-th-large"></i>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link"  href="{{route('logout')}}" >
+          <i class="fas fa-power-off"></i>
+        </a>
+      </li>
     </ul>
   </nav>
+  
   <!-- /.navbar -->

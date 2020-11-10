@@ -8,7 +8,7 @@ use App\Models\Admin\Combo;
 
 class Base extends Model
 {
-	protected $fillable = ['base_name', 'base_measure', 'base_description', 'base_price', 'base_state'];
+	protected $fillable = ['base_name', 'base_measure', 'base_colors', 'base_customization', 'base_description', 'base_price', 'base_state'];
     protected $primaryKey = 'base_id';
 
     public function baseImages()

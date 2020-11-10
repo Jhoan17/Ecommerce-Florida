@@ -14,10 +14,13 @@
   <script src="{{asset('dsadmin/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
   <script src="{{asset('dsadmin/plugins/jquery-validation/additional-methods.min.js')}}"></script>
   <script src="{{asset('dsadmin/plugins/jquery-validation/localization/messages_es.min.js')}}"></script>
+  <!-- Bootstrap Switch -->
+  <script src="https://adminlte.io/themes/v3/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
   <script src="{{asset('dsadmin/pages/scripts/base/create.js')}}"></script>
   <script src="{{asset('dsadmin/custom/validation-general.js')}}"></script>
   <script src="{{asset('dsadmin/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.1/js/plugins/piexif.min.js" type="text/javascript"></script>
+
 
 @endsection
 
@@ -62,7 +65,17 @@
                         <label for="exampleInputEmail1">Medidas</label>
                         <input type="text" name="base_measure" class="form-control lowercase" id="base_measure" placeholder="Medidas de la base" value="{{old('base_measure')}}" autocomplete="off" required>
                       </div>
-                    </div>                                                        
+                    </div>
+                    <div class="row form-group">
+                      <div class="col col-md-6">
+                        <label for="exampleInputEmail1">Colores</label>
+                        <input type="text" name="base_colors" class="form-control lowercase value_without_space" id="base_name" placeholder="cafe,azul,verde,rojo" value="{{old('base_colors')}}" autocomplete="off" required>
+                      </div>
+                      <div class="col col-md-6">
+                        <label for="exampleInputEmail1">¿ Es personalizable ?</label><br>
+                        <input type="checkbox" name="base_customization" value="text" checked data-bootstrap-switch data-off-color="danger">
+                      </div>
+                    </div>                                                         
                     <div class="row form-group">                     
                       <div class="col-md-9">
                         <label for="exampleInputEmail1">Descripción</label>

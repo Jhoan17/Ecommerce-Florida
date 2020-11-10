@@ -10,6 +10,10 @@
   <script src="{{asset('dsadmin/plugins/jquery-validation/localization/messages_es.min.js')}}"></script>
   <script src="{{asset('dsadmin/custom/validation-general.js')}}"></script>
   <script src="{{asset('dsadmin/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
+  <!-- Bootstrap Switch -->
+  <script src="https://adminlte.io/themes/v3/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+  <script src="{{asset('dsadmin/pages/scripts/base/edit.js')}}"></script>
+  
 
 @endsection
 
@@ -51,7 +55,17 @@
                         <label for="exampleInputEmail1">Medidas</label>
                         <input type="text" name="base_measure" class="form-control" id="base_measure" placeholder="Medida de la base" value="{{old('base_measure', $base->base_measure ?? '')}}" autocomplete="off" required>
                       </div>
-                    </div>  
+                    </div>
+                    <div class="row form-group">
+                      <div class="col col-md-6">
+                        <label for="exampleInputEmail1">Colores</label>
+                        <input type="text" name="base_colors" class="form-control lowercase value_without_space" id="base_name" placeholder="cafe,azul,verde,rojo" value="{{old('base_colors', $base->base_colors ?? '')}}" autocomplete="off" required>
+                      </div>
+                      <div class="col col-md-6">
+                        <label for="exampleInputEmail1">¿ Es personalizable ?</label><br>
+                        <input type="checkbox" name="base_customization" value="text" @if($base->base_customization!=""){{"checked"}}@endif  data-bootstrap-switch data-on-color="success" data-off-color="danger">
+                      </div>
+                    </div> 
                     <div class="row form-group">                     
                       <div class="col-md-6">
                         <label for="exampleInputEmail1">Descripción</label>

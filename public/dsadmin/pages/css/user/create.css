@@ -2,6 +2,17 @@
     width: 60%;
 }
 
+.kv-preview-thumb{
+    width: 200px;
+    align-content: center;
+    overflow: hidden;
+}
+
+.kv-file-content{
+    position: relative;
+    right: 12px;
+}
+
 
 .file-preview{
     overflow: hidden;

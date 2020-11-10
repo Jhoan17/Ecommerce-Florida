@@ -13,22 +13,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {    return view('page.home'); })->name('home');
+// Route::get('/', function () {    return view('page.home'); })->name('home');
 
-Auth::routes();
+// Auth::routes();
 
-// ROUTES PAGE
-Route::get('/catalogo', function () { return view('page.catalogo'); })->name('catalogo');
-Route::get('/blog', function () { return view('page.blog'); })->name('blog');
-Route::get('/work-us', function () { return view('page.work-us'); })->name('work-us');
-Route::get('/contact', function () { return view('page.contact'); })->name('contact');
-Route::get('/shop', function () { return view('page.shop'); })->name('shop');
+// // ROUTES PAGE
+// Route::get('/catalogo', function () { return view('page.catalogo'); })->name('catalogo');
+// Route::get('/blog', function () { return view('page.blog'); })->name('blog');
+// Route::get('/work-us', function () { return view('page.work-us'); })->name('work-us');
+// Route::get('/contact', function () { return view('page.contact'); })->name('contact');
+// Route::get('/shop', function () { return view('page.shop'); })->name('shop');
+
+
+Route::get('/', 'Security\LoginController@index')->name('login');
+Route::post('security/login', 'Security\LoginController@login')->name('login-post');
+Route::get('security/logout', 'Security\LoginController@logout')->name('logout');
+
+Route::get('admin/desk', 'Admin\DeskController@index')->name('admin')->middleware('auth');
+
+
 
 
 // ROUTES ADMIN
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function (){
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth'], function (){
 
-	Route::get('/desk', function () { return view('admin.admin'); })->name('admin');
+
+
 
 	Route::get('/customer', 'CustomerController@index')->name('customer-index');
 
@@ -50,7 +60,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function (){
 
 
 
-	Route::get('/suggestions', 'SuggestionController@index')->name('suggestions-index');
+	Route::get('/suggestion', 'SuggestionController@index')->name('suggestion-index');
 
 
 	Route::get('combo-type/', 'ComboTypeController@index')->name('combo-type-index');
@@ -127,9 +137,47 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function (){
 	Route::get('base/image/destroy/{base_image_id}', 'BaseImageController@destroy')->name('base-image-destroy');
 
 
+	Route::get('order-all', 'OrderController@orderAll')->name('order-all');
+	Route::get('order-user', 'OrderController@orderUser')->name('order-user');
+	Route::post('order/{order}', 'OrderController@show')->name('order-show');
+	Route::get('order/state', 'OrderController@state')->name('order-change-state');
 
 
+
+	/*RUTAS DEL MENU*/
+    Route::get('menu', 'MenuController@index')->name('menu-index');
+    Route::get('menu/create', 'MenuController@create')->name('menu-create');
+    Route::post('menu/store', 'MenuController@store')->name('menu-store');
+    Route::get('menu/{menu_id}/edit', 'MenuController@edit')->name('menu-edit');
+    Route::put('menu/{menu_id}', 'MenuController@update')->name('menu-update');
+    Route::get('menu/{menu_id}/delete', 'MenuController@delete')->name('menu-delete');
+    Route::post('menu/menu-save-order', 'MenuController@saveOrder')->name('menu-save-order');
+
+    /*RUTAS MENU_ROL*/
+    Route::get('menu-rol', 'MenuRolController@index')->name('menu-rol-index');
+    Route::post('menu-rol', 'MenuRolController@store')->name('menu-rol-store');
+
+    // RUTAS PERMISSION
+   	Route::get('permission/', 'PermissionController@index')->name('permission-index');
+	Route::get('permission/create', 'PermissionController@create')->name('permission-create');
+	Route::post('permission/store', 'PermissionController@store')->name('permission-store');
+	Route::get('permission/{permission_id}/edit', 'PermissionController@edit')->name('permission-edit');
+	Route::put('permission/{permission_id}', 'PermissionController@update')->name('permission-update');
+	Route::post('permission/', 'PermissionController@show')->name('permission-show');
+	Route::get('permission/{permission_id}/destroy', 'PermissionController@destroy')->name('permission-destroy');
+
+	/*RUTAS PERMISSION_ROL*/
+    Route::get('permission-rol', 'PermissionRolController@index')->name('permission-rol-index');
+    Route::post('permission-rol', 'PermissionRolController@store')->name('permission-rol-store');
+
+    Route::get('notification-read/{notification_id}', 'NotificationController@read')->name('notification-read');
+    Route::get('notification-push', 'NotificationController@push')->name('notification-push');
+
+
+    Route::get('profile', 'ProfileController@index')->name('profile');
+    Route::put('profile/{profile_id}', 'ProfileController@update')->name('profile-update');
+	Route::put('profile/image/edit/{profile_image}', 'ProfileController@updateImage')->name('profile-image-update');
+	Route::put('profile/change-password/{profile_id}', 'ProfileController@changePassword')->name('change-password');
 
 
 });
-

@@ -29,7 +29,7 @@
         <h3 class="card-title"><strong>Listado de usuarios</strong></h3>
         @csrf
         <div class="card-tools">
-          <a href="{{ route('user-create')}}" class="btn btn-block btn-outline-info">
+          <a href="{{ route('user-create')}}" class="btn btn-block btn-outline-primary">
             <i class="fas fa-plus"></i> Agregar
           </a>
         </div>
@@ -38,7 +38,6 @@
       @include('includes.messages')
         <div class="row">
           <div class="col-12">
-            <div class="card">
               <div class="card-body table-responsive p-0">
                 <br>
                 <table class="table table-striped table-borderedr" id="table-users">
@@ -50,7 +49,7 @@
                       <th>Nombres</th>
                       <th>Apellidos</th>
                       <th>Email</th>
-                      <th>Telefono</th>
+                      {{-- <th>Telefono</th> --}}
                       <!--<th>Fecha de nacimiento</th>-->
                       <!--<th>Genero</th>-->
                       <th>Rol</th>
@@ -78,7 +77,7 @@
                         <td class="align-middle">{{$user->user_name}}</td>
                         <td class="align-middle">{{$user->user_surname}}</td>
                         <td class="align-middle">{{$user->user_email}}</td>
-                        <td class="align-middle">{{$user->user_phone}}</td>
+                        {{-- <td class="align-middle">{{$user->user_phone}}</td> --}}
                         <td class="align-middle">{{$user->rol->rol_name}}</td>
                         <td class="text-center align-middle">
                           <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
@@ -104,7 +103,6 @@
                   </tbody>
                 </table>
               </div>
-            </div>
           </div>
         </div>
       </div>

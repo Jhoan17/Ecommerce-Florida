@@ -17,6 +17,8 @@ class CreateBasesTable extends Migration
             $table->bigIncrements('base_id');
             $table->string('base_name');
             $table->string('base_measure');
+            $table->string('base_colors')->nullable();
+            $table->string('base_customization',100)->nullable();
             $table->string('base_description');
             $table->string('base_price');
             $table->string('base_state');

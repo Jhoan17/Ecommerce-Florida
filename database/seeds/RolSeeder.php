@@ -16,7 +16,8 @@ class RolSeeder extends Seeder
         ]);
         
         DB::table('rols')->insert([
-            'rol_name' => 'customer'
+            'rol_id' => 10
+            'rol_name' => 'root'
         ]);
     }
 }

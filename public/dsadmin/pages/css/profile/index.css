@@ -1,0 +1,55 @@
+#product-image-default{
+    width: 60%;
+}
+
+
+.file-preview{
+    overflow: hidden;
+    width: 270px;
+    height: 304px; 
+}
+
+.kv-product .krajee-default.file-preview-frame,.kv-product .krajee-default.file-preview-frame:hover {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    text-align: center;
+}
+.kv-product {
+    display: inline-block;
+}
+.kv-product .file-input {
+    display: table-cell;
+}
+.kv-reqd {
+    color: red;
+    font-family: monospace;
+    font-weight: normal;
+}
+
+#div-reply-modifiable{
+    display: none;
+}
+
+#div-reply-modifiable-color{
+    display: none;
+}
+#div-reply-modifiable-flavor{
+    display: none;
+}
+#div-reply-modifiable-recipes{
+    display: none;
+}
+
+#div-reply-personalized{
+    display: none;
+}
+
+.color-text{
+    color: red;
+}
+
+#user-image-default{
+    width: 100%;
+}

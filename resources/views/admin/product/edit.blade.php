@@ -138,7 +138,7 @@
                             @foreach($product_customizations as $product_customization)
                               @if($product_customization == "text")
                                 <option value="text" selected>Texto</option>
-                                <option value="iamge">Imagen</option>
+                                <option value="image">Imagen</option>
                               @elseif($product_customization == "image")
                                 <option value="image" selected>Imagen</option>
                                  <option value="text">Texto</option>
@@ -149,7 +149,7 @@
                             @endforeach
                           @else
                             <option value="text">Texto</option>
-                            <option value="iamge">Imagen</option>
+                            <option value="image">Imagen</option>
                           @endif
                          </select>
                       </div>
