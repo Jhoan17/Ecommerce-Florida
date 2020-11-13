@@ -35,7 +35,9 @@
       <p class="login-box-msg">Iniciar sesion</p>
         @if($errors->any())
         <div id="toast-container" class="toast-top-right">  
+          {{-- {{dd($errors->messages)}} --}}
           @foreach($errors -> all() as $error)
+
             <div class="toast toast-error toast-time-hide" aria-live="assertive" style="">
               <div class="toast-message">
                 {{$error}}
@@ -44,6 +46,7 @@
           @endforeach
         </div>    
       @endif
+      @include('includes.messages')
       <form action="{{ route('login-post') }}" method="post" autocomplete="off">
         @csrf
         <div class="input-group mb-3">
@@ -83,7 +86,7 @@
       <!-- /.social-auth-links -->
       <br>
       <p class="mb-1 col-12 text-center">
-        <a href="forgot-password.html">No recuerdo mi contraseña?</a>
+        <a href="{{route("forgot-password")}}">No recuerdo mi contraseña?</a>
       </p>
       <p class="mb-0">
         <a href="register.html" class="text-center"></a>

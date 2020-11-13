@@ -5,6 +5,12 @@ namespace App\Http\Controllers\Security;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use App\Mail\ForgotPassword;
+use App\Models\Security\User;
+
 
 class LoginController extends Controller
 {
@@ -52,6 +58,36 @@ class LoginController extends Controller
     public function username()
     {
         return 'user_id_card';
+    }
+
+    public function forgotPassword(){
+
+        return view('security.forgot-password');
+    }
+
+    public function sendPasswordNew(request $request){
+
+        $user = User::where("user_email",$request->email)->first();
+
+        if($user == null){
+
+            return redirect('security/forgot-password')->withErrors(['error' => 'Este correo no existe en nuesta base de datos']);
+
+        }else{
+
+            $passwordNew = Str::random(10);
+
+            DB::table('users')
+                            ->where('user_id', $user->user_id)
+                            ->update(['password' => bcrypt($passwordNew)]);
+
+
+            $receivers = $request->email;
+
+            Mail::to($receivers)->send(new ForgotPassword($user->user_id, $passwordNew));
+            return redirect('/')->with('message', 'La contraseña nueva se ha enviado a tu correo');
+        }
+        
     }
     
 }

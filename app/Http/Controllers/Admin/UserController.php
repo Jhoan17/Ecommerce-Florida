@@ -9,6 +9,8 @@ use App\Models\Security\User;
 use App\Models\Admin\Rol;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ValidationUser;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendPassword;
 
 
 class UserController extends Controller
@@ -71,9 +73,13 @@ class UserController extends Controller
             $request->request->add(['user_state' => 'desactive']);
         }
 
-        $password=bcrypt(Str::random(20)); //-- Generador de password aleatoria encriptada
-        $request->request->add(['user_password' => $password]);
+        $password=bcrypt($request->user_password); //-- Generador de password aleatoria encriptada
+        $request->request->add(['password' => $password]);
         User::create($request->all());
+
+        
+        $user = User::where("user_email",$request->user_email)->first();
+        Mail::to($request->user_email)->send(new SendPassword($user->user_id, $request->user_password));
         return redirect('admin/user/create')->with('message', 'Usario registrado con exito');
     }
 

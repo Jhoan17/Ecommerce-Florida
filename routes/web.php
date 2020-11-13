@@ -28,6 +28,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'Security\LoginController@index')->name('login');
 Route::post('security/login', 'Security\LoginController@login')->name('login-post');
 Route::get('security/logout', 'Security\LoginController@logout')->name('logout');
+Route::get('security/forgot-password', 'Security\LoginController@forgotPassword')->name('forgot-password');
+Route::post('security/send-password', 'Security\LoginController@sendPasswordNew')->name('send-password');
+
 
 Route::get('admin/desk', 'Admin\DeskController@index')->name('admin')->middleware('auth');
 

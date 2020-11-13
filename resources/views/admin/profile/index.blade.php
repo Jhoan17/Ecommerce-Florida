@@ -219,19 +219,19 @@
                         <div class="form-group">
                           <div class="col col-md-12">
                             <label for="exampleInputEmail1">Contraseña actual</label>
-                            <input type="password" name="password" class="form-control lowercase" id="password" placeholder="Contraseña actual" value="{{old('password')}}" autocomplete="off" >
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Contraseña actual" value="{{old('password')}}" autocomplete="off" >
                           </div>
                         </div>
                         <div class="form-group">
                           <div class="col col-md-12">
                             <label for="exampleInputEmail1">Contraseña nueva</label>
-                            <input type="password" name="new_password" class="form-control lowercase" id="new_password" placeholder="Contraseña nueva" value="{{old('new_password')}}" autocomplete="off" >
+                            <input type="password" name="new_password" class="form-control" id="new_password" placeholder="Contraseña nueva" value="{{old('new_password')}}" autocomplete="off" >
                           </div>
                         </div>
                         <div class="form-group">  
                           <div class="col col-md-12">
                             <label for="exampleInputEmail1">Confirmar contraseña</label>
-                            <input type="password" name="confirm_new_password" class="form-control lowercase" id="confirm_new_password" placeholder="Confirmar contraseña" value="{{old('password_new_confirm')}}" autocomplete="off" >
+                            <input type="password" name="confirm_new_password" class="form-control" id="confirm_new_password" placeholder="Confirmar contraseña" value="{{old('password_new_confirm')}}" autocomplete="off" >
                           </div>
                         </div>  
                       </div>

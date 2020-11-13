@@ -132,7 +132,7 @@
                     <div class="row form-group">
                       <div class="col col-md-12">
                         <label for="exampleInputEmail1">CONTRASEÑA GENERADA</label>
-                        <input type="text" name="user_password" class="form-control lowercase" id="user_password" placeholder="" value="{{Str::random(10)}}" autocomplete="off" readonly>
+                        <input type="text" name="user_password" class="form-control" id="user_password" placeholder="" value="{{Str::random(10)}}" autocomplete="off" readonly>
                       </div>
                     </div>
                   </div>

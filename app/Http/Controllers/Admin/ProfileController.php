@@ -113,7 +113,7 @@ class ProfileController extends Controller
 
 
     public function changePassword(Request $request, $profile_id){
-        $check = Hash::check($request->password, Auth::user()->password, []);
+        $check = Hash::check($request->password, Auth::user()->password);
         if ($check == true) {
 
             if (strlen($request->new_password)>6) {

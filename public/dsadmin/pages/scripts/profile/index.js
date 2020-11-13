@@ -12,25 +12,25 @@ $(document).ready(function () {
 	span.hide();
 	//función que comprueba las dos contraseñas
 	function matchPassword(){
-	var value1 = pass1.val();
-	var value2 = pass2.val();
-	//muestro el span
-	span.show().removeClass();
-	//condiciones dentro de la función
-	if(value1 != value2){
-	span.text(denial).addClass('denial');	
-	}
-	if(value1.length==0 || value1==""){
-	span.text(empty).addClass('denial');	
-	}
-	if(value1.length<6){
-	span.text(length).addClass('denial');
-	}
-	if(value1.length!=0 && value1==value2){
-		span.text(confirmation).removeClass("denial").addClass('confirmation');
-		$("#button-change-password").removeAttr("disabled");
-		$("#button-change-password").removeClass("disabled");
-	}
+		var value1 = pass1.val();
+		var value2 = pass2.val();
+		//muestro el span
+		span.show().removeClass();
+		//condiciones dentro de la función
+		if(value1 != value2){
+		span.text(denial).addClass('denial');	
+		}
+		if(value1.length==0 || value1==""){
+		span.text(empty).addClass('denial');	
+		}
+		if(value1.length<6){
+		span.text(length).addClass('denial');
+		}
+		if(value1.length!=0 && value1.length>6 && value1==value2){
+			span.text(confirmation).removeClass("denial").addClass('confirmation');
+			$("#button-change-password").removeAttr("disabled");
+			$("#button-change-password").removeClass("disabled");
+		}
 	}
 	//ejecuto la función al soltar la tecla
 	pass2.keyup(function(){
