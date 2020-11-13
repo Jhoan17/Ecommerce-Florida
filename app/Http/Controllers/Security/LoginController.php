@@ -25,9 +25,22 @@ class LoginController extends Controller
     {
         $rol = $user->rol()->get();
         $notification = $user->notifications()->where("read_at",NULL)->get();
+        // dd($user->user_state);
         
         if ($rol->isNotEmpty()) {
-            $user->setSession($notification);
+
+            if($user->user_state == "active"){
+
+                $user->setSession($notification);
+
+            }else{
+
+                $this->guard()->logout();
+                $request->session()->invalidate();
+                return redirect('/')->withErrors(['error' => 'Este usuario no esta activo']);
+                
+            }
+            
             // dd($user->setSession($rol));  
         } else {
             $this->guard()->logout();

@@ -53,3 +53,28 @@
 #user-image-default{
     width: 100%;
 }
+
+
+.remove-background {
+  background:rgba(235, 163, 200, 0) !important;
+  box-shadow:none; 
+  border:none
+}
+
+
+#result{
+    text-align: center;
+    display:block;
+    font-size:.8em;
+    margin:0px 0 10px;
+    padding:5px 0 5px 11px;
+    width:100%;
+}
+.confirmation{
+    background:#C6FFD5;
+    border:1px solid green;
+}
+.denial{
+    background:#ffcccc;
+    border:1px solid red
+}

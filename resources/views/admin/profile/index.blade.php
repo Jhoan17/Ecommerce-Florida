@@ -97,9 +97,9 @@
             <div class="card">
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
-                  <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">General</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#imageProfile" data-toggle="tab">Cambiar foto de perfil</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#password" data-toggle="tab">Cambiar contraseña</a></li>
+                  <li class="nav-item"><a id="hrefsettings" class="nav-link active" href="#settings" data-toggle="tab">General</a></li>
+                  <li class="nav-item"><a id="hrefimageProfiles" class="nav-link" href="#imageProfile" data-toggle="tab">Cambiar foto de perfil</a></li>
+                  <li class="nav-item"><a id="hrefpassword" class="nav-link" href="#password" data-toggle="tab">Cambiar contraseña</a></li>
                   
                 </ul>
               </div><!-- /.card-header -->
@@ -237,7 +237,7 @@
                       </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                      <button type="submit" class="btn btn-primary col-md-12">Guardar</button>
+                      <button type="submit" disabled="true" id="button-change-password" class="btn btn-primary col-md-12 disabled">Cambiar</button>
                     </div>
                   </form>
                   </div>
@@ -252,5 +252,27 @@
         </div>
         <!-- /.row -->
       </div><!-- /.container-fluid -->
+      <div class="modal fade remove-background" id="modal-sm-close-session">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Desea cerrar sesion</h4>
+              <a href="{{route('profile')}}" type="button" class="close">
+                <span aria-hidden="true">&times;</span>
+              </a>
+            </div>
+            <div class="modal-body">
+              <p>Para probar tu nueva contraseña</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <a href="{{route('profile')}}" type="button" class="btn btn-default">Cancelar</a>
+              <a href="{{route('logout')}}" type="button" class="btn btn-primary">Cerrar sesion</a>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
     </section>
 @endsection

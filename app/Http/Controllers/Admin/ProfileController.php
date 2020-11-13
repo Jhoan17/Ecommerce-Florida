@@ -116,20 +116,26 @@ class ProfileController extends Controller
         $check = Hash::check($request->password, Auth::user()->password, []);
         if ($check == true) {
 
-            if ($request->new_password == $request->confirm_new_password) {         
+            if (strlen($request->new_password)>6) {
 
-                DB::table('users')
-                    ->where('user_id', $profile_id)
-                    ->update(['password' => bcrypt($request->new_password)]);
+                if ($request->new_password == $request->confirm_new_password) {         
 
-                return redirect('admin/profile#password')->with('message', 'La Contraseña se cambio correctamente');
+                    DB::table('users')
+                        ->where('user_id', $profile_id)
+                        ->update(['password' => bcrypt($request->new_password)]);
+
+                    return redirect('admin/profile?password-changed')->with('message', 'La Contraseña se cambio correctamente');
+                }else{
+                    return redirect('admin/profile?password')->with('error', 'La Contraseña nueva no coincide');
+                }
+
             }else{
-                return redirect('admin/profile#password')->with('error', 'La Contraseña nueva no coincide');
+                return redirect('admin/profile?password')->with('error', 'Contraseña debe de tener más de 6 caracteres'); 
             }
 
 
         }else{
-            return redirect('admin/profile#password')->with('error', 'Contraseña actual incorrecta'); 
+            return redirect('admin/profile?password')->with('error', 'Contraseña actual incorrecta'); 
         }
     }
     /**

@@ -60,7 +60,7 @@ $(document).ready(function () {
 
     pushLoad(null);
 
-    $(".toast-time-hide").fadeOut(4000);
+    $(".toast-time-hide").fadeOut(6000);
 
 
     $('.lowercase').keyup(function(){
